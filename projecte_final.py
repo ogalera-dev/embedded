@@ -241,7 +241,7 @@ while 1:
     # IMPRIMIM EL NUMERO QUE HEM REBUT
     all_value = mail
 
-    PRINT_DISPLAY(2, all_value)
+    PRINT_DISPLAY(1, all_value)
     #reverse(all_value)
 
     # ESPEREM 5 SEGONS
