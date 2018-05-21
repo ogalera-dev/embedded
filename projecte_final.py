@@ -17,7 +17,7 @@ from time import localtime, strftime, sleep
 DEBUG = 1
 
 USERNAME = "oga.mab123"     # just the part before the @ sign, add yours here
-PASSWORD = "oga.mab123"     
+PASSWORD = "oga.mab123"
 
 NEWMAIL_OFFSET = 1        # my unread messages never goes to zero, yours might
 
@@ -35,17 +35,26 @@ SEG_E = 25
 SEG_F = 24
 SEG_G = 23
 
-LED_GROC = 6
+D2_SEG_A = 6
+D2_SEG_B = 5
+D2_SEG_C = 22
+D2_SEG_D = 27
+D2_SEG_E = 17
+D2_SEG_F = 4
+D2_SEG_G = 18
+
+#LED_GROC = 6
 LED_VERD = 13
 LED_VERMELL = 19
 LED_BLAU = 26
 
 # indiquem els ports de sortida GPIO
-GPIO.setup(LED_GROC, GPIO.OUT) ## GPIO 6 com a sortida. Led GROC
+#GPIO.setup(LED_GROC, GPIO.OUT) ## GPIO 6 com a sortida. Led GROC
 GPIO.setup(LED_VERD, GPIO.OUT) ## GPIO 13 com a sortida. Led VERD
 GPIO.setup(LED_VERMELL, GPIO.OUT) ## GPIO 19 com a sortida. Led VERMELL
 GPIO.setup(LED_BLAU, GPIO.OUT) ## GPIO 26 com a sortida. Led BLAU
 
+#Configuracio del primer digit
 GPIO.setup(SEG_A, GPIO.OUT) ## GPIO 21 com a sortida. SEGMNENT A
 GPIO.setup(SEG_B, GPIO.OUT) ## GPIO 20 com a sortida. SEGMNENT B
 GPIO.setup(SEG_C, GPIO.OUT) ## GPIO 16 com a sortida. SEGMNENT C
@@ -54,8 +63,17 @@ GPIO.setup(SEG_E, GPIO.OUT) ## GPIO 25 com a sortida. SEGMNENT E
 GPIO.setup(SEG_F, GPIO.OUT) ## GPIO 24 com a sortida. SEGMNENT F
 GPIO.setup(SEG_G, GPIO.OUT) ## GPIO 23 com a sortida. SEGMNENT G
 
+#Configuracio del segon digit
+GPIO.setup(D2_SEG_A, GPIO.OUT) ## GPIO 21 com a sortida. SEGMNENT A
+GPIO.setup(D2_SEG_B, GPIO.OUT) ## GPIO 20 com a sortida. SEGMNENT B
+GPIO.setup(D2_SEG_C, GPIO.OUT) ## GPIO 16 com a sortida. SEGMNENT C
+GPIO.setup(D2_SEG_D, GPIO.OUT) ## GPIO 12 com a sortida. SEGMNENT D
+GPIO.setup(D2_SEG_E, GPIO.OUT) ## GPIO 25 com a sortida. SEGMNENT E
+GPIO.setup(D2_SEG_F, GPIO.OUT) ## GPIO 24 com a sortida. SEGMNENT F
+GPIO.setup(D2_SEG_G, GPIO.OUT) ## GPIO 23 com a sortida. SEGMNENT G
 
-def PRINT_DISPLAY(digito):
+
+def PRINT_DISPLAY(display, digito):
     INICIALIZAR_DISPLAY() # apaguem tots els segments
     # activem els segments segons el numero
     if digito== 0: # numero 0
@@ -129,7 +147,7 @@ def INICIALIZAR_DISPLAY():
     GPIO.output(SEG_G, False) # segment g
 
 def INICIALITZAR_LEDS():
-    GPIO. output(LED_GROC, False)
+#    GPIO. output(LED_GROC, False)
     GPIO. output(LED_VERD, False)
     GPIO. output(LED_VERMELL, False)
     GPIO. output(LED_BLAU, False)
@@ -215,7 +233,7 @@ while 1:
 
     # IMPRIMIM EL NUMERO QUE HEM REBUT
     all_value = mail
-    PRINT_DISPLAY(all_value)
+    PRINT_DISPLAY(1, all_value)
 
     # ESPEREM 5 SEGONS
     time.sleep(10)
@@ -232,7 +250,7 @@ while 1:
 
     # IMPRIMIM EL NUMERO QUE HEM REBUT
     all_value = notification_count
-    PRINT_DISPLAY(all_value)
+    PRINT_DISPLAY(1, all_value)
 
     # ESPEREM 5 SEGONS
     time.sleep(10)
