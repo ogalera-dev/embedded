@@ -138,13 +138,20 @@ def PRINT_DISPLAY(display, digito):
 
 #inicialitzem a 0
 def INICIALIZAR_DISPLAY():
-    GPIO.output(SEG_A, False) # segment a
-    GPIO.output(SEG_B, False) # segment b
-    GPIO.output(SEG_C, False) # segment c
-    GPIO.output(SEG_D, False) # segment d
-    GPIO.output(SEG_E, False) # segment e
-    GPIO.output(SEG_F, False) # segment f
-    GPIO.output(SEG_G, False) # segment g
+        GPIO.output(SEG_A, False) # segment a
+        GPIO.output(SEG_B, False) # segment b
+        GPIO.output(SEG_C, False) # segment c
+        GPIO.output(SEG_D, False) # segment d
+        GPIO.output(SEG_E, False) # segment e
+        GPIO.output(SEG_F, False) # segment f
+        GPIO.output(SEG_G, False) # segment g
+        GPIO.output(D2_SEG_A, False) # segment a
+        GPIO.output(D2_SEG_B, False) # segment b
+        GPIO.output(D2_SEG_C, False) # segment c
+        GPIO.output(D2_SEG_D, False) # segment d
+        GPIO.output(D2_SEG_E, False) # segment e
+        GPIO.output(D2_SEG_F, False) # segment f
+        GPIO.output(D2_SEG_G, False) # segment g
 
 def INICIALITZAR_LEDS():
 #    GPIO. output(LED_GROC, False)
@@ -234,7 +241,7 @@ while 1:
     # IMPRIMIM EL NUMERO QUE HEM REBUT
     all_value = mail
 
-    PRINT_DISPLAY(1, all_value)
+    PRINT_DISPLAY(2, all_value)
     #reverse(all_value)
 
     # ESPEREM 5 SEGONS
