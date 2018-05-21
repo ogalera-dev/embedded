@@ -255,11 +255,11 @@ while 1:
     # ENCENEM EL LED BLAU
     GPIO.output(LED_BLAU, 1)
     # CONSULTEM EL FACEBOOK
-    facebook()
+    #facebook()
 
     # IMPRIMIM EL NUMERO QUE HEM REBUT
-    all_value = notification_count
-    PRINT_DISPLAY(1, all_value)
+    #all_value = notification_count
+    PRINT_DISPLAY(2, all_value)
 
     # ESPEREM 5 SEGONS
     time.sleep(10)
