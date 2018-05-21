@@ -117,24 +117,24 @@ def PRINT_DISPLAY(display, digito):
         GPIO.output(SEG_F if display == 1 else D2_SEG_F, True) # segment f
         GPIO.output(SEG_G if display == 1 else D2_SEG_G, True) # segment g
     elif digito== 7: # numero 7
-        GPIO.output(SEG_A, True) # segment a
-        GPIO.output(SEG_B, True) # segment b
-        GPIO.output(SEG_C, True) # segment c
+        GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
+        GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
+        GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
     elif digito== 8: # numero SEG_G
-        GPIO.output(SEG_A, True) # segment a
-        GPIO.output(SEG_B, True) # segment b
-        GPIO.output(SEG_C, True) # segment c
-        GPIO.output(SEG_D, True) # segment d
-        GPIO.output(SEG_E, True) # segment e
-        GPIO.output(SEG_F, True) # segment f
-        GPIO.output(SEG_G, True) # segment g
+        GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
+        GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
+        GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
+        GPIO.output(SEG_D if display == 1 else D2_SEG_D, True) # segment d
+        GPIO.output(SEG_E if display == 1 else D2_SEG_E, True) # segment e
+        GPIO.output(SEG_F if display == 1 else D2_SEG_F, True) # segment f
+        GPIO.output(SEG_G if display == 1 else D2_SEG_G, True) # segment g
     elif digito== 9: # numero 9
-        GPIO.output(SEG_A, True) # segment a
-        GPIO.output(SEG_B, True) # segment b
-        GPIO.output(SEG_C, True) # segment c
-        GPIO.output(SEG_D, True) # segment d
-        GPIO.output(SEG_F, True) # segment f
-        GPIO.output(SEG_G, True) # segment g
+        GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
+        GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
+        GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
+        GPIO.output(SEG_D if display == 1 else D2_SEG_D, True) # segment d
+        GPIO.output(SEG_F if display == 1 else D2_SEG_F, True) # segment f
+        GPIO.output(SEG_G if display == 1 else D2_SEG_G, True) # segment g
 
 #inicialitzem a 0
 def INICIALIZAR_DISPLAY():
@@ -215,9 +215,9 @@ def twitter():
         
 def reverse(n):
     if(n<10):
-        return n*10
+        return PRINT_DISPLAY(1, all_value)
     else:
-        return int(str(n)[::-1])
+        return PRINT_DISPLAY(2,int(str(n)[::-1]))
 
 while 1:
     ############################# GMAIL #############################
@@ -233,7 +233,9 @@ while 1:
 
     # IMPRIMIM EL NUMERO QUE HEM REBUT
     all_value = mail
-    PRINT_DISPLAY(2, all_value)
+
+    PRINT_DISPLAY(1, all_value)
+    #reverse(all_value)
 
     # ESPEREM 5 SEGONS
     time.sleep(10)
