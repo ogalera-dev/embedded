@@ -78,37 +78,37 @@ def PRINT_DISPLAY(display, digito):
     # activem els segments segons el numero
     if digito== 0: # numero 0
         GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
-        GPIO.output(SEG_B, True) # segment b
-        GPIO.output(SEG_C, True) # segment c
-        GPIO.output(SEG_D, True) # segment d
-        GPIO.output(SEG_E, True) # segment e
-        GPIO.output(SEG_F, True) # segment f
+        GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
+        GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
+        GPIO.output(SEG_D if display == 1 else D2_SEG_D, True) # segment d
+        GPIO.output(SEG_E if display == 1 else D2_SEG_E, True) # segment e
+        GPIO.output(SEG_F if display == 1 else D2_SEG_F, True) # segment f
     elif digito== 1: # numero 1
-        GPIO.output(SEG_B, True) # segment b
-        GPIO.output(SEG_C, True) # segment c
+        GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
+        GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
     elif digito== 2: # numero 2
-        GPIO.output(SEG_A, True) # segment a
-        GPIO.output(SEG_B, True) # segment b
-        GPIO.output(SEG_D, True) # segment d
-        GPIO.output(SEG_E, True) # segment e
-        GPIO.output(SEG_G, True) # segment g
+        GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
+        GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
+        GPIO.output(SEG_D if display == 1 else D2_SEG_D, True) # segment d
+        GPIO.output(SEG_E if display == 1 else D2_SEG_E, True) # segment e
+        GPIO.output(SEG_G if display == 1 else D2_SEG_G, True) # segment g
     elif digito== 3: # numero 3
-        GPIO.output(SEG_A, True) # segment a
-        GPIO.output(SEG_B, True) # segment b
-        GPIO.output(SEG_C, True) # segment c
-        GPIO.output(SEG_D, True) # segment d
-        GPIO.output(SEG_G, True) # segment g
+        GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
+        GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
+        GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
+        GPIO.output(SEG_D if display == 1 else D2_SEG_D, True) # segment d
+        GPIO.output(SEG_G if display == 1 else D2_SEG_G, True) # segment g
     elif digito== 4: # numero 4
-        GPIO.output(SEG_B, True) # segment b
-        GPIO.output(SEG_C, True) # segment c
-        GPIO.output(SEG_F, True) # segment f
-        GPIO.output(SEG_G, True) # segment g
+        GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
+        GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
+        GPIO.output(SEG_F if display == 1 else D2_SEG_F, True) # segment f
+        GPIO.output(SEG_G if display == 1 else D2_SEG_G, True) # segment g
     elif digito== 5: # numero 5
-        GPIO.output(SEG_A, True) # segment a
-        GPIO.output(SEG_C, True) # segment c
-        GPIO.output(SEG_D, True) # segment d
-        GPIO.output(SEG_F, True) # segment f
-        GPIO.output(SEG_G, True) # segment g
+        GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
+        GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
+        GPIO.output(SEG_D if display == 1 else D2_SEG_D, True) # segment d
+        GPIO.output(SEG_F if display == 1 else D2_SEG_F, True) # segment f
+        GPIO.output(SEG_G if display == 1 else D2_SEG_G, True) # segment g
     elif digito== 6: # numero 6
         GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
         GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
