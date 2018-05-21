@@ -77,7 +77,7 @@ def PRINT_DISPLAY(display, digito):
     INICIALIZAR_DISPLAY() # apaguem tots els segments
     # activem els segments segons el numero
     if digito== 0: # numero 0
-        GPIO.output(SEG_A, True) # segment a
+        GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
         GPIO.output(SEG_B, True) # segment b
         GPIO.output(SEG_C, True) # segment c
         GPIO.output(SEG_D, True) # segment d
@@ -110,12 +110,12 @@ def PRINT_DISPLAY(display, digito):
         GPIO.output(SEG_F, True) # segment f
         GPIO.output(SEG_G, True) # segment g
     elif digito== 6: # numero 6
-        GPIO.output(SEG_A, True) # segment a
-        GPIO.output(SEG_C, True) # segment c
-        GPIO.output(SEG_D, True) # segment d
-        GPIO.output(SEG_E, True) # segment e
-        GPIO.output(SEG_F, True) # segment f
-        GPIO.output(SEG_G, True) # segment g
+        GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
+        GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
+        GPIO.output(SEG_D if display == 1 else D2_SEG_D, True) # segment d
+        GPIO.output(SEG_E if display == 1 else D2_SEG_E, True) # segment e
+        GPIO.output(SEG_F if display == 1 else D2_SEG_F, True) # segment f
+        GPIO.output(SEG_G if display == 1 else D2_SEG_G, True) # segment g
     elif digito== 7: # numero 7
         GPIO.output(SEG_A, True) # segment a
         GPIO.output(SEG_B, True) # segment b
@@ -233,7 +233,7 @@ while 1:
 
     # IMPRIMIM EL NUMERO QUE HEM REBUT
     all_value = mail
-    PRINT_DISPLAY(1, all_value)
+    PRINT_DISPLAY(2, all_value)
 
     # ESPEREM 5 SEGONS
     time.sleep(10)
