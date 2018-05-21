@@ -215,9 +215,9 @@ def twitter():
         
 def reverse(n):
     if(n<10):
-        return n*10
+        return PRINT_DISPLAY(1, all_value)
     else:
-        return int(str(n)[::-1])
+        return PRINT_DISPLAY(2,int(str(n)[::-1]))
 
 while 1:
     ############################# GMAIL #############################
@@ -233,7 +233,8 @@ while 1:
 
     # IMPRIMIM EL NUMERO QUE HEM REBUT
     all_value = mail
-    PRINT_DISPLAY(1, all_value)
+    reverse(all_value)
+    
 
     # ESPEREM 5 SEGONS
     time.sleep(10)
