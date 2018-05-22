@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # importem la llibreria GPIO
 
@@ -21,8 +22,6 @@ PASSWORD = "oga.mab123"
 
 NEWMAIL_OFFSET = 1        # my unread messages never goes to zero, yours might
 
-DELAY_REFRESC_S = 7
-
 ##################### Gmail
 
 # configuracio per els ports GPIO
@@ -37,12 +36,12 @@ SEG_E = 25
 SEG_F = 24
 SEG_G = 23
 
-D2_SEG_A = 06
-D2_SEG_B = 05
+D2_SEG_A = 6
+D2_SEG_B = 5
 D2_SEG_C = 22
 D2_SEG_D = 27
 D2_SEG_E = 17
-D2_SEG_F=4
+D2_SEG_F = 4
 D2_SEG_G = 18
 
 #LED_GROC = 6
@@ -76,6 +75,7 @@ GPIO.setup(D2_SEG_G, GPIO.OUT) ## GPIO 23 com a sortida. SEGMNENT G
 
 
 def PRINT_DISPLAY(display, digito):
+    INICIALIZAR_DISPLAY() # apaguem tots els segments
     # activem els segments segons el numero
     if digito== 0: # numero 0
         GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
@@ -121,7 +121,7 @@ def PRINT_DISPLAY(display, digito):
         GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
         GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
         GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
-    elif digito== 8: # numero 8
+    elif digito== 8: # numero SEG_G
         GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
         GPIO.output(SEG_B if display == 1 else D2_SEG_B, True) # segment b
         GPIO.output(SEG_C if display == 1 else D2_SEG_C, True) # segment c
@@ -136,24 +136,23 @@ def PRINT_DISPLAY(display, digito):
         GPIO.output(SEG_D if display == 1 else D2_SEG_D, True) # segment d
         GPIO.output(SEG_F if display == 1 else D2_SEG_F, True) # segment f
         GPIO.output(SEG_G if display == 1 else D2_SEG_G, True) # segment g
-    GPIO.output(D2_SEG_F, True)
 
 #inicialitzem a 0
 def INICIALIZAR_DISPLAY():
-    GPIO.output(SEG_A, False) # segment a
-    GPIO.output(SEG_B, False) # segment b
-    GPIO.output(SEG_C, False) # segment c
-    GPIO.output(SEG_D, False) # segment d
-    GPIO.output(SEG_E, False) # segment e
-    GPIO.output(SEG_F, False) # segment f
-    GPIO.output(SEG_G, False) # segment g
-    GPIO.output(D2_SEG_A, False) # segment a
-    GPIO.output(D2_SEG_B, False) # segment b
-    GPIO.output(D2_SEG_C, False) # segment c
-    GPIO.output(D2_SEG_D, False) # segment d
-    GPIO.output(D2_SEG_E, False) # segment e
-    GPIO.output(D2_SEG_F, False) # segment f
-    GPIO.output(D2_SEG_G, False) # segment g
+        GPIO.output(SEG_A, False) # segment a
+        GPIO.output(SEG_B, False) # segment b
+        GPIO.output(SEG_C, False) # segment c
+        GPIO.output(SEG_D, False) # segment d
+        GPIO.output(SEG_E, False) # segment e
+        GPIO.output(SEG_F, False) # segment f
+        GPIO.output(SEG_G, False) # segment g
+        GPIO.output(D2_SEG_A, False) # segment a
+        GPIO.output(D2_SEG_B, False) # segment b
+        GPIO.output(D2_SEG_C, False) # segment c
+        GPIO.output(D2_SEG_D, False) # segment d
+        GPIO.output(D2_SEG_E, False) # segment e
+        GPIO.output(D2_SEG_F, False) # segment f
+        GPIO.output(D2_SEG_G, False) # segment g
 
 def INICIALITZAR_LEDS():
 #    GPIO. output(LED_GROC, False)
@@ -173,7 +172,7 @@ def get_page_data(page_id,access_token):
     try:
         api_request = urllib2.Request(fb_graph_url)
         api_response = urllib2.urlopen(api_request)
-
+        
         try:
             return json.loads(api_response.read())
         except (ValueError, KeyError, TypeError):
@@ -184,7 +183,7 @@ def get_page_data(page_id,access_token):
             return e.code
         elif hasattr(e, 'reason'):
             return e.reason
-
+            
 def facebook():
     #global like_count
     global notification_count
@@ -221,10 +220,13 @@ def twitter():
     follower = user.followers_count
     print user.friends_count
     print user.favourites_count
+        
+def reverse(n):
+    if(n<10):
+        return PRINT_DISPLAY(1, all_value)
+    else:
+        return PRINT_DISPLAY(2,int(str(n)[::-1]))
 
-
-# CONSULTEM EL GMAIL
-gmail()
 while 1:
     ############################# GMAIL #############################
     INICIALIZAR_DISPLAY()
@@ -235,23 +237,18 @@ while 1:
     GPIO.output(LED_VERMELL, 1)
 
     # CONSULTEM EL GMAIL
+    gmail()
+
     # IMPRIMIM EL NUMERO QUE HEM REBUT
     all_value = mail
 
-    #Primer digit del gmail
-    PRINT_DISPLAY(1, int(all_value%10))
-
-    all_value = all_value/10
-    #Segon digit del gmail
-    PRINT_DISPLAY(2, all_value if all_value < 10 else 9)
-
+    PRINT_DISPLAY(2, all_value)
     #reverse(all_value)
 
-    # ESPEREM
-    time.sleep(DELAY_REFRESC_S)
+    # ESPEREM 5 SEGONS
+    time.sleep(10)
 
     ############################# FACEBOOK #############################
-    #facebook()
     INICIALIZAR_DISPLAY()
     #Inicialitzem els Leds
     INICIALITZAR_LEDS()
@@ -259,16 +256,11 @@ while 1:
     # ENCENEM EL LED BLAU
     GPIO.output(LED_BLAU, 1)
     # CONSULTEM EL FACEBOOK
+    facebook()
 
     # IMPRIMIM EL NUMERO QUE HEM REBUT
-    #all_value = notification_count
-    all_value = 0
-    PRINT_DISPLAY(1, all_value%10)
-    all_value = all_value/10
-    PRINT_DISPLAY(2, all_value if all_value < 10 else 9)
+    all_value = notification_count
+    PRINT_DISPLAY(1, all_value)
 
-    # ESPEREM
-    time.sleep(DELAY_REFRESC_S)
-
-    #CONSULTA GMAIL
-    gmail()
+    # ESPEREM 5 SEGONS
+    time.sleep(10)
