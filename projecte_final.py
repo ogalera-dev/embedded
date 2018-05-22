@@ -208,15 +208,15 @@ def facebook():
 def twitter(): 
     global follower
     global api    #https://apps.twitter.com
-    consumer_key = "xxxxxxxxxxxxxxxxxxxxxx"  # use your access key
-    consumer_secret = "xxxxxxxxxxxxxxxxxxxxxxxxx"
-    access_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    access_secret = "xxxxxxxxxxxxxxxxxxxxxxxxx"
+    consumer_key = "6Ov9ZYpGrYfCv3xomagiPEWB8"  # use your access key
+    consumer_secret = "SZkb5GyBnWw0O8DjaQ0dFhnHSoQXXEo1NQfIsWbNryNhVPlbtl"
+    access_key = "  998955377575251968-5VT2GrKdrNLavQlZwzdzIUc104wttUK"
+    access_secret = "7b6hHVpTA2ZVM61OL5ntSb5uImjOJ9lBSA9RDsxB155Xd"
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_key, access_secret)
     api = tweepy.API(auth)
 
-    user = api.get_user(xxxxxxxxxx)  # your user id
+    user = api.get_user(998955377575251968)  # your user id
     print user.screen_name
     print user.followers_count
     follower = user.followers_count
