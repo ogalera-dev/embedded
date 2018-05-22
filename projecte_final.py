@@ -74,7 +74,6 @@ GPIO.setup(D2_SEG_G, GPIO.OUT) ## GPIO 23 com a sortida. SEGMNENT G
 
 
 def PRINT_DISPLAY(display, digito):
-    INICIALIZAR_DISPLAY() # apaguem tots els segments
     # activem els segments segons el numero
     if digito== 0: # numero 0
         GPIO.output(SEG_A if display == 1 else D2_SEG_A, True) # segment a
