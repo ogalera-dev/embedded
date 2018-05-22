@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # importem la llibreria GPIO
 
-import sys, locale, threading 
-import oauth, tweepy, sys, locale, threading 
-from time import localtime, strftime, sleep
+import tweepy
 
 def twitter(): 
     global follower
