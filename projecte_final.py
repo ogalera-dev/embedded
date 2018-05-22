@@ -276,5 +276,24 @@ while 1:
     # ESPEREM
     time.sleep(DELAY_REFRESC_S)
 
+    ############################# TWITTER #############################
+    twitter()
+    INICIALIZAR_DISPLAY()
+    #Inicialitzem els Leds
+    INICIALITZAR_LEDS()
+
+    # ENCENEM EL LED BLAU
+    GPIO.output(LED_VERMELL, 1)
+
+    # IMPRIMIM EL NUMERO QUE HEM REBUT
+    #all_value = notification_count
+    all_value = follower
+    PRINT_DISPLAY(1, all_value%10)
+    all_value = all_value/10
+    PRINT_DISPLAY(2, all_value if all_value < 10 else 9)
+
+    # ESPEREM
+    time.sleep(DELAY_REFRESC_S)
+
     #CONSULTA GMAIL
     gmail()
