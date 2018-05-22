@@ -51,7 +51,6 @@ LED_VERMELL = 19
 LED_BLAU = 26
 
 # indiquem els ports de sortida GPIO
-#GPIO.setup(LED_GROC, GPIO.OUT) ## GPIO 6 com a sortida. Led GROC
 GPIO.setup(LED_VERD, GPIO.OUT) ## GPIO 13 com a sortida. Led VERD
 GPIO.setup(LED_VERMELL, GPIO.OUT) ## GPIO 19 com a sortida. Led VERMELL
 GPIO.setup(LED_BLAU, GPIO.OUT) ## GPIO 26 com a sortida. Led BLAU
@@ -192,16 +191,14 @@ def facebook():
     page_id = "176830336311921" 
     # username or id <a href="https://developers.facebook.com/tools/explorer"> https://developers.facebook.com/tools/explorer</a>
 
-    token = "EAACEdEose0cBADnZCzLCgTFTRPKBVklGey1wZCEB4JzCX3ggv46HZAKzggZCTQtXZBqUtgutZBXnvKHIY6RoYmkl11ZC3LeKkYIL4FCKy7ewlzbnZBq6UcKTHOYZAOXuCjBnyX5H828kw9TbEnSzgXUZAu3a5CzZAZBLfgkEfsqwuV3wKB8qJJfudUfBwuULWmCfSqfLkWgVJZAzQPBxKZC4tZCfsxT"  # Access Token
+    token = "EAACEdEose0cBAGc8X4aAwZAIXbW2lTKYwRzvMunqFAIOcLUC2VTd9FcscCxVGiKyuP1anJ5WeU6v65yZCzymOaSNxjvGisZCkusZAeZBGvRjCdIvTigTayvO5ZCyurQZA7L0l1UaPdbJZBzHRo6Sle5uaPZCcKY0tzAZB52fZBRwNoLjcIlI1KsdNgMREMz8726GmkuoT6uDbnczZBxok0FxXz1X"  # Access Token
     page_data = get_page_data(page_id,token)
 
-    print "Page Name:"+ page_data['name']
-    #print "Likes:"+ str(page_data['likes'])
-    #like_count = page_data['likes']
+    print "Nom:"+ page_data['name']
     print "Link:"+ page_data['link']
-    print "Unread notifications:"+ str(page_data['unread_notif_count'])
+    print "Notificacions no llegides:"+ str(page_data['unread_notif_count'])
     notification_count = page_data['unread_notif_count']
-    print "Unread message:"+ str(page_data['unread_message_count'])
+    print "Missatges no llegits:"+ str(page_data['unread_message_count'])
 
     #time.sleep(0.5)
 
@@ -257,7 +254,7 @@ while 1:
     time.sleep(DELAY_REFRESC_S)
 
     ############################# FACEBOOK #############################
-    #facebook()
+    facebook()
     INICIALIZAR_DISPLAY()
     #Inicialitzem els Leds
     INICIALITZAR_LEDS()
@@ -267,8 +264,8 @@ while 1:
     # CONSULTEM EL FACEBOOK
 
     # IMPRIMIM EL NUMERO QUE HEM REBUT
-    #all_value = notification_count
-    all_value = 0
+    all_value = notification_count
+    #all_value = 0
     PRINT_DISPLAY(1, all_value%10)
     all_value = all_value/10
     PRINT_DISPLAY(2, all_value if all_value < 10 else 9)

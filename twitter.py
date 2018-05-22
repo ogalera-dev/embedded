@@ -17,10 +17,10 @@ def twitter():
     api = tweepy.API(auth)
 
     user = api.get_user(998955377575251968)  # your user id
-    print(user.screen_name)
-    print(user.followers_count)
+    print "Usuari: " + user.screen_name
+    print "Followers " + user.followers_count
     follower = user.followers_count
-    print(user.friends_count)
-    print(user.favourites_count)
+    print "Friends " + user.friends_count
+    print "Favourites " + user.favourites_count
 
 twitter();
