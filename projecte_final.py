@@ -207,15 +207,15 @@ def facebook():
 def twitter(): 
     global follower
     global api    #https://apps.twitter.com
-    consumer_key = "xxxxxxxxxxxxxxxxxxxxxx"  # use your access key
-    consumer_secret = "xxxxxxxxxxxxxxxxxxxxxxxxx"
-    access_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    access_secret = "xxxxxxxxxxxxxxxxxxxxxxxxx"
+    consumer_key = "6Ov9ZYpGrYfCv3xomagiPEWB8"  # use your access key
+    consumer_secret = "SZkb5GyBnWw0O8DjaQ0dFhnHSoQXXEo1NQfIsWbNryNhVPlbtl"
+    access_key = "  998955377575251968-5VT2GrKdrNLavQlZwzdzIUc104wttUK"
+    access_secret = "7b6hHVpTA2ZVM61OL5ntSb5uImjOJ9lBSA9RDsxB155Xd"
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_key, access_secret)
     api = tweepy.API(auth)
 
-    user = api.get_user(xxxxxxxxxx)  # your user id
+    user = api.get_user(998955377575251968)  # your user id
     print user.screen_name
     print user.followers_count
     follower = user.followers_count
@@ -263,6 +263,25 @@ while 1:
     # IMPRIMIM EL NUMERO QUE HEM REBUT
     #all_value = notification_count
     all_value = 0
+    PRINT_DISPLAY(1, all_value%10)
+    all_value = all_value/10
+    PRINT_DISPLAY(2, all_value if all_value < 10 else 9)
+
+    # ESPEREM
+    time.sleep(DELAY_REFRESC_S)
+
+    ############################# TWITTER #############################
+    twitter()
+    INICIALIZAR_DISPLAY()
+    #Inicialitzem els Leds
+    INICIALITZAR_LEDS()
+
+    # ENCENEM EL LED BLAU
+    GPIO.output(LED_VERMELL, 1)
+
+    # IMPRIMIM EL NUMERO QUE HEM REBUT
+    #all_value = notification_count
+    all_value = follower
     PRINT_DISPLAY(1, all_value%10)
     all_value = all_value/10
     PRINT_DISPLAY(2, all_value if all_value < 10 else 9)
