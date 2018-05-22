@@ -1,31 +1,11 @@
-#!/usr/bin/env python
+#!/bin/python
+import urllib2
+import json
+
 # importem la llibreria GPIO
 
 import RPi.GPIO as GPIO, feedparser, time
 
-import urllib2
-import json
-import time
-
-import sys, locale, threading 
-#import oauth, tweepy, sys, locale, threading 
-from time import localtime, strftime, sleep
-
-import tweepy
-
-
-##################### Gmail
-
-DEBUG = 1
-
-USERNAME = "oga.mab123"     # just the part before the @ sign, add yours here
-PASSWORD = "oga.mab123"
-
-NEWMAIL_OFFSET = 1        # my unread messages never goes to zero, yours might
-
-DELAY_REFRESC_S = 7
-
-##################### Gmail
 
 # configuracio per els ports GPIO
 # utilitzarem la identificacio BCM per els ports GPIO
@@ -52,7 +32,9 @@ LED_VERD = 13
 LED_VERMELL = 19
 LED_BLAU = 26
 
+
 # indiquem els ports de sortida GPIO
+#GPIO.setup(LED_GROC, GPIO.OUT) ## GPIO 6 com a sortida. Led GROC
 GPIO.setup(LED_VERD, GPIO.OUT) ## GPIO 13 com a sortida. Led VERD
 GPIO.setup(LED_VERMELL, GPIO.OUT) ## GPIO 19 com a sortida. Led VERMELL
 GPIO.setup(LED_BLAU, GPIO.OUT) ## GPIO 26 com a sortida. Led BLAU
@@ -162,126 +144,56 @@ def INICIALITZAR_LEDS():
     GPIO. output(LED_VERMELL, False)
     GPIO. output(LED_BLAU, False)
 
-def gmail():
-    global mail
-    newmails = int(feedparser.parse("https://" + USERNAME + ":" + PASSWORD +"@mail.google.com/gmail/feed/atom")["feed"]["fullcount"])
-    print "You have", newmails, "new emails"
-    mail = newmails
 
-def get_page_data(page_id,access_token):
-    api_endpoint = "https://graph.facebook.com/v2.4/"
-    fb_graph_url = api_endpoint+page_id+"?fields=id,name,likes,unread_notif_count,unread_message_count,link&access_token="+access_token
-    try:
-        api_request = urllib2.Request(fb_graph_url)
-        api_response = urllib2.urlopen(api_request)
+def mappers():
+    contents = json.load(urllib2.urlopen("http://192.168.1.220:23233/mappers"))
+    return contents['mappers']
 
-        try:
-            return json.loads(api_response.read())
-        except (ValueError, KeyError, TypeError):
-            return "JSON error"
-
-    except IOError, e:
-        if hasattr(e, 'code'):
-            return e.code
-        elif hasattr(e, 'reason'):
-            return e.reason
-
-def facebook():
-    #global like_count
-    global notification_count
-    page_id = "176830336311921" 
-    # username or id <a href="https://developers.facebook.com/tools/explorer"> https://developers.facebook.com/tools/explorer</a>
-
-    token = "EAACEdEose0cBAGc8X4aAwZAIXbW2lTKYwRzvMunqFAIOcLUC2VTd9FcscCxVGiKyuP1anJ5WeU6v65yZCzymOaSNxjvGisZCkusZAeZBGvRjCdIvTigTayvO5ZCyurQZA7L0l1UaPdbJZBzHRo6Sle5uaPZCcKY0tzAZB52fZBRwNoLjcIlI1KsdNgMREMz8726GmkuoT6uDbnczZBxok0FxXz1X"  # Access Token
-    page_data = get_page_data(page_id,token)
-
-    print "Nom:"+ page_data['name']
-    print "Link:"+ page_data['link']
-    print "Notificacions no llegides:"+ str(page_data['unread_notif_count'])
-    notification_count = page_data['unread_notif_count']
-    print "Missatges no llegits:"+ str(page_data['unread_message_count'])
-
-    #time.sleep(0.5)
-
-def twitter(): 
-    global follower
-    global api    #https://apps.twitter.com
-    consumer_key = "6Ov9ZYpGrYfCv3xomagiPEWB8"  # use your access key
-    consumer_secret = "SZkb5GyBnWw0O8DjaQ0dFhnHSoQXXEo1NQfIsWbNryNhVPlbtl"
-    access_key = "998955377575251968-5VT2GrKdrNLavQlZwzdzIUc104wttUK"
-    access_secret = "7b6hHVpTA2ZVM61OL5ntSb5uImjOJ9lBSA9RDsxB155Xd"
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_key, access_secret)
-    api = tweepy.API(auth)
-    user = api.get_user('998955377575251968')  # your user id
-    follower = user.followers_count
+def reducers():
+    contents = json.load(urllib2.urlopen("http://192.168.1.220:23233/reducers"))
+    return contents['reducers']
 
 
-# CONSULTEM EL GMAIL
-gmail()
-while 1:
-    ############################# GMAIL #############################
-    INICIALIZAR_DISPLAY()
-    #Inicialitzem els Leds
-    INICIALITZAR_LEDS()
+fiMappers = False
 
-    # ENCENEM EL LED VERMELL
-    GPIO.output(LED_VERMELL, 1)
 
-    # CONSULTEM EL GMAIL
-    # IMPRIMIM EL NUMERO QUE HEM REBUT
-    all_value = mail
+#Inici map
 
-    #Primer digit del gmail
-    PRINT_DISPLAY(1, int(all_value%10))
+INICIALIZAR_DISPLAY()
+INICIALITZAR_LEDS()
 
-    all_value = all_value/10
-    #Segon digit del gmail
-    PRINT_DISPLAY(2, all_value if all_value < 10 else 9)
+anterior = -1
+while not fiMappers:
+    m = mappers()
+    if m != 100 and anterior == -1:
+        GPIO.output(LED_VERMELL,1)
+    if m == 100:
+        fiMappers = True
+    if anterior < m:
+        INICIALIZAR_DISPLAY()
+        PRINT_DISPLAY(1, m%10)
+        m = m / 10
+        PRINT_DISPLAY(2, m if m < 10 else 9)
+        anterior = m
 
-    #reverse(all_value)
 
-    # ESPEREM
-    time.sleep(DELAY_REFRESC_S)
+INICIALIZAR_DISPLAY()
+INICIALITZAR_LEDS()
+fiReducers = False
+anterior = -1
+while not fiReducers:
+    r = reducers()
+    if m != 100 and anterior == -1:
+        GPIO.output(LED_BLAU, 1)
+    if r == 100:
+        fiReducers = True
+    if anterior < r:
+        INICIALIZAR_DISPLAY()
+        PRINT_DISPLAY(1, r%10)
+        r = r / 10
+        PRINT_DISPLAY(2, r if r < 10 else 9)
+        anterior = r
 
-    ############################# FACEBOOK #############################
-    facebook()
-    INICIALIZAR_DISPLAY()
-    #Inicialitzem els Leds
-    INICIALITZAR_LEDS()
-
-    # ENCENEM EL LED BLAU
-    GPIO.output(LED_BLAU, 1)
-    # CONSULTEM EL FACEBOOK
-
-    # IMPRIMIM EL NUMERO QUE HEM REBUT
-    all_value = notification_count
-    #all_value = 0
-    PRINT_DISPLAY(1, all_value%10)
-    all_value = all_value/10
-    PRINT_DISPLAY(2, all_value if all_value < 10 else 9)
-
-    # ESPEREM
-    time.sleep(DELAY_REFRESC_S)
-
-    ############################# TWITTER #############################
-    twitter()
-    INICIALIZAR_DISPLAY()
-    #Inicialitzem els Leds
-    INICIALITZAR_LEDS()
-
-    # ENCENEM EL LED BLAU
-    GPIO.output(LED_VERD, 1)
-
-    # IMPRIMIM EL NUMERO QUE HEM REBUT
-    #all_value = notification_count
-    all_value = follower
-    PRINT_DISPLAY(1, all_value%10)
-    all_value = all_value/10
-    PRINT_DISPLAY(2, all_value if all_value < 10 else 9)
-
-    # ESPEREM
-    time.sleep(DELAY_REFRESC_S)
-
-    #CONSULTA GMAIL
-    gmail()
+INICIALITZAR_LEDS()
+GPIO.output(LED_VERD, 1)
+INICIALIZAR_DISPLAY()
